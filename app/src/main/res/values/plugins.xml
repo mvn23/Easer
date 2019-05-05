@@ -77,12 +77,15 @@
 
     <string name="event_calendar">Calendar Event</string>
     <string name="ecalendar_select_dialog_title">Select Calendar</string>
-    <string name="text_calendar_name">Calendar name</string>
+    <string name="text_calendar_name">Calendar Name</string>
     <string name="text_calendar">Calendar</string>
     <string name="indicator_when">When…</string>
+    <string name="calendar_event_title">Event Title</string>
+    <string name="choice_all_day_event">Only match all-day events</string>
     <string name="choice_start_of">Start of</string>
     <string name="choice_end_of">End of</string>
-    <string name="choice_any_event">Any Events</string>
+    <string name="choice_any_event">Any Event</string>
+    <string name="choice_event_match_pattern">Match Pattern</string>
 
     <string name="event_broadcast">Receive Broadcast</string>
     <string name="broadcast_action">Action</string>
