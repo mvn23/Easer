@@ -22,7 +22,7 @@ package ryey.easer.plugins.condition.calendar;
 class CalendarData {
     long calendar_id;
     CalendarConditionMatchType matchType = CalendarConditionMatchType.ANY;
-    String matchPattern = "*";
+    String matchPattern = "%";
     boolean isAllDayEvent = false;
 
     public boolean equals(Object obj) {

@@ -28,8 +28,9 @@ import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
+
+import androidx.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
 
@@ -93,12 +94,12 @@ public class CalendarTracker extends SkeletonTracker<CalendarConditionData> {
 
     private void updateTracker() {
         Long nextRun;
-        if (activeEventsCount(context.getContentResolver(), data.data.calendar_id, data.data.matchPattern) > 0) {
+        if (activeEventsCount(context.getContentResolver(), data.data) > 0) {
             newSatisfiedState(true);
-            nextRun = currentEvent_match_end(context.getContentResolver(), data.data.calendar_id, data.data.matchPattern);
+            nextRun = currentEvent_match_end(context.getContentResolver(), data.data);
         } else {
             newSatisfiedState(false);
-            nextRun = nextEvent_match_start(context.getContentResolver(), data.data.calendar_id, data.data.matchPattern);
+            nextRun = nextEvent_match_start(context.getContentResolver(), data.data);
         }
         if (nextRun == null)
             nextRun = Calendar.getInstance().getTimeInMillis() + DateUtils.DAY_IN_MILLIS;

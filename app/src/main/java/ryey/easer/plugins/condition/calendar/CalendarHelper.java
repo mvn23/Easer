@@ -54,30 +54,28 @@ class CalendarHelper {
         return res;
     }
 
-    static Long nextEvent_match_start(ContentResolver contentResolver, long calendar_id, String pattern) {
-        CalendarEvent[] events = getEvents(contentResolver, calendar_id, pattern, 3);
-        if (events.length == 0)
+    static Long nextEvent_match_start(ContentResolver contentResolver, CalendarData data) {
+        CalendarEvent[] events = getEvents(contentResolver, data, 3);
+        if (events == null || events.length == 0)
             return null;
-        Long res = events[0].beginMs;
-        return res;
+        return events[0].beginMs;
     }
 
-    static Long currentEvent_match_end(ContentResolver contentResolver, long calendar_id, String pattern) {
-        CalendarEvent[] events = getEvents(contentResolver, calendar_id, pattern, 0, CalendarContract.Instances.END);
-        if (events.length == 0)
+    static Long currentEvent_match_end(ContentResolver contentResolver, CalendarData data) {
+        CalendarEvent[] events = getEvents(contentResolver, data, 0, CalendarContract.Instances.END);
+        if (events == null || events.length == 0)
             return null;
-        Long res = events[0].endMs;
-        return res;
+        return events[0].endMs;
     }
 
-    static int activeEventsCount(ContentResolver contentResolver, long calendar_id, String pattern) {
-        return getEvents(contentResolver, calendar_id, pattern, 0).length;
+    static int activeEventsCount(ContentResolver contentResolver, CalendarData data) {
+        return getEvents(contentResolver, data, 0).length;
     }
 
-    private static CalendarEvent[] getEvents(ContentResolver cr, long calendarID, String matchTitle, int days) {
-        return getEvents(cr, calendarID, matchTitle, days, CalendarContract.Instances.BEGIN);
+    private static CalendarEvent[] getEvents(ContentResolver cr, CalendarData data, int days) {
+        return getEvents(cr, data, days, CalendarContract.Instances.BEGIN);
     }
-    private static CalendarEvent[] getEvents(ContentResolver cr, long calendarID, String matchTitle, int days, String sortMethod) {
+    private static CalendarEvent[] getEvents(ContentResolver cr, CalendarData data, int days, String sortMethod) {
         long current_time = Calendar.getInstance().getTimeInMillis();
 
         Uri.Builder instance_uri = CalendarContract.Instances.CONTENT_URI.buildUpon();
@@ -90,14 +88,18 @@ class CalendarHelper {
                 CalendarContract.Instances.END,
                 CalendarContract.Instances.ALL_DAY,
         };
+        String allDayValues = data.isAllDayEvent ? "'1'" : "'0','1'";
         String instance_selection = "((" + CalendarContract.Instances.CALENDAR_ID + " IS ?)" +
                 " AND (" + CalendarContract.Instances.TITLE + " LIKE ?)" +
+                " AND (" + CalendarContract.Instances.ALL_DAY + " IN (?))" +
                 ")";
         String[] instance_selectionArgs = new String[] {
-                String.valueOf(calendarID),
-                matchTitle,
+                String.valueOf(data.calendar_id),
+                data.matchPattern,
+                allDayValues,
         };
-        Cursor cur = cr.query(instance_uri.build(), INSTANCE_PROJECTION, instance_selection, instance_selectionArgs,
+        Uri uri = instance_uri.build();
+        Cursor cur = cr.query(uri, INSTANCE_PROJECTION, instance_selection, instance_selectionArgs,
                 sortMethod);
         if (cur == null)
             return null;
@@ -119,10 +121,10 @@ class CalendarHelper {
     }
 
     private static class CalendarEvent {
-        public String eventTitle;
-        public Long beginMs;
-        public Long endMs;
-        public String allDay;
+        String eventTitle;
+        Long beginMs;
+        Long endMs;
+        String allDay;
 
         CalendarEvent(String eventTitle, Long beginMs, Long endMs, String allDay) {
             this.eventTitle = eventTitle;
