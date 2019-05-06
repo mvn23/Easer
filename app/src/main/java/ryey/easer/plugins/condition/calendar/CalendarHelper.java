@@ -88,10 +88,10 @@ class CalendarHelper {
                 CalendarContract.Instances.END,
                 CalendarContract.Instances.ALL_DAY,
         };
-        String allDayValues = data.isAllDayEvent ? "'1'" : "'0','1'";
+        String allDayValues = data.isAllDayEvent ? "1" : "%";
         String instance_selection = "((" + CalendarContract.Instances.CALENDAR_ID + " IS ?)" +
                 " AND (" + CalendarContract.Instances.TITLE + " LIKE ?)" +
-                " AND (" + CalendarContract.Instances.ALL_DAY + " IN (?))" +
+                " AND (" + CalendarContract.Instances.ALL_DAY + " LIKE ?)" +
                 ")";
         String[] instance_selectionArgs = new String[] {
                 String.valueOf(data.calendar_id),
@@ -112,7 +112,7 @@ class CalendarHelper {
                     cur.getString(0),
                     cur.getLong(1),
                     cur.getLong(2),
-                    cur.getString(3)
+                    cur.getInt(3) == 1
             );
             cur.moveToNext();
         }
@@ -124,9 +124,9 @@ class CalendarHelper {
         String eventTitle;
         Long beginMs;
         Long endMs;
-        String allDay;
+        Boolean allDay;
 
-        CalendarEvent(String eventTitle, Long beginMs, Long endMs, String allDay) {
+        CalendarEvent(String eventTitle, Long beginMs, Long endMs, Boolean allDay) {
             this.eventTitle = eventTitle;
             this.beginMs = beginMs;
             this.endMs = endMs;
