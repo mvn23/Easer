@@ -30,7 +30,7 @@
     <string name="text_calendar_name">Kalender Naam</string>
     <string name="text_calendar">Kalender</string>
     <string name="calendar_event_title">Gebeurtenis Titel</string>
-    <string name="choice_all_day_event">Alleen 'hele dag' gebeurtenissen</string>
+    <string name="choice_all_day_event">Alleen \'hele dag\' gebeurtenissen</string>
     <string name="indicator_when">Wanneer…</string>
     <string name="choice_start_of">Start van</string>
     <string name="choice_end_of">Einde van</string>
