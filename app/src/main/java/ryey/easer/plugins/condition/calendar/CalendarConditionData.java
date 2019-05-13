@@ -40,31 +40,28 @@ public class CalendarConditionData implements ConditionData {
     private static final String T_match_pattern = "match_pattern";
     private static final String T_all_day = "all_day";
 
-    CalendarData data;
+    final CalendarData data;
 
     CalendarConditionData(CalendarData data) {
         this.data = data;
     }
 
     CalendarConditionData(@NonNull String data, @NonNull PluginDataFormat format, int version) throws IllegalStorageDataException {
-        parse(data, format, version);
-    }
-
-    public void parse(@NonNull String data, @NonNull PluginDataFormat format, int version) throws IllegalStorageDataException {
-        switch(format) {
-            default:
-                try {
-                    JSONObject jsonObject = new JSONObject(data);
-                    this.data = new CalendarData();
-                    this.data.calendar_id = jsonObject.optLong(T_calendar_id);
-                    this.data.matchType = CalendarConditionMatchType.getById(jsonObject.optInt(T_match_type, 0));
-                    this.data.matchPattern = jsonObject.optString(T_match_pattern, "*");
-                    this.data.isAllDayEvent = jsonObject.getBoolean(T_all_day);
-                } catch (JSONException e) {
-                    Logger.e(e, "Error parsing %s data to SUFFIX", getClass().getSimpleName());
-                    e.printStackTrace();
-                }
+        long calendar_id = -1;
+        CalendarConditionMatchType matchType = CalendarConditionMatchType.ANY;
+        String matchPattern = "%";
+        boolean isAllDayEvent = false;
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            calendar_id = jsonObject.optLong(T_calendar_id);
+            matchType = CalendarConditionMatchType.getById(jsonObject.optInt(T_match_type, 0));
+            matchPattern = jsonObject.optString(T_match_pattern, "*");
+            isAllDayEvent = jsonObject.getBoolean(T_all_day);
+        } catch (JSONException e) {
+            Logger.e(e, "Error parsing %s data to SUFFIX", getClass().getSimpleName());
+            e.printStackTrace();
         }
+        this.data = new CalendarData(calendar_id, matchType, matchPattern, isAllDayEvent);
     }
 
     @NonNull

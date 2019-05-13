@@ -38,10 +38,7 @@ class CalendarConditionDataFactory implements ConditionDataFactory<CalendarCondi
     @NonNull
     @Override
     public CalendarConditionData dummyData() {
-        CalendarData calendarData = new CalendarData();
-        calendarData.calendar_id = 20;
-        calendarData.matchType = CalendarConditionMatchType.ANY;
-        calendarData.isAllDayEvent = false;
+        CalendarData calendarData = new CalendarData(20, CalendarConditionMatchType.ANY, "%", false);
         CalendarConditionData dummyData = new CalendarConditionData(calendarData);
         return dummyData;
     }

@@ -185,11 +185,7 @@ public class CalendarPluginViewFragment extends PluginViewFragment<CalendarCondi
         } else if (selected_rb == rb_event_title_pattern.getId()) {
             matchType = EVENT_TITLE;
         }
-        CalendarData calendarData = new CalendarData();
-        calendarData.calendar_id = calendar_id;
-        calendarData.matchType = matchType;
-        calendarData.matchPattern = ti_event_title_pattern.getText().toString().trim();
-        calendarData.isAllDayEvent = cb_all_day_event.isChecked();
+        CalendarData calendarData = new CalendarData(calendar_id, matchType, ti_event_title_pattern.getText().toString().trim(), cb_all_day_event.isChecked());
         return new CalendarConditionData(calendarData);
     }
 }

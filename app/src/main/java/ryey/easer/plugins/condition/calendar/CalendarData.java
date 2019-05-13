@@ -20,10 +20,17 @@
 package ryey.easer.plugins.condition.calendar;
 
 class CalendarData {
-    long calendar_id;
-    CalendarConditionMatchType matchType = CalendarConditionMatchType.ANY;
-    String matchPattern = "%";
-    boolean isAllDayEvent = false;
+    final long calendar_id;
+    final CalendarConditionMatchType matchType;
+    final String matchPattern;
+    final boolean isAllDayEvent;
+
+    CalendarData(long calendar_id, CalendarConditionMatchType matchType, String matchPattern, boolean isAllDayEvent) {
+        this.calendar_id = calendar_id;
+        this.matchType = matchType;
+        this.matchPattern = matchPattern;
+        this.isAllDayEvent = isAllDayEvent;
+    }
 
     public boolean equals(Object obj) {
         if (obj == this)
