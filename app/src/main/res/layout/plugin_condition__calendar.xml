@@ -27,7 +27,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
-        android:hint="@string/text_calendar_name"
+        android:hint="@string/condition_calendar_name"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/calendar_picker"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/calendar_event_title"
+        android:text="@string/condition_calendar_event_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline"
         android:layout_marginLeft="8dp" />
@@ -66,13 +66,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="@string/choice_any_event" />
+            android:text="@string/condition_calendar_any_event" />
         <RadioButton
             android:id="@+id/radioButton_event_match_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/choice_event_match_pattern" />
+            android:text="@string/condition_calendar_event_match_pattern" />
         <EditText
             android:id="@+id/textInput_event_pattern"
             android:layout_width="320dp"
@@ -87,7 +87,7 @@
         android:id="@+id/checkBox_all_day_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/choice_all_day_event"
+        android:text="@string/condition_calendar_all_day_event"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup_event_title"
         />
 
